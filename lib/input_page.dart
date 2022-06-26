@@ -15,7 +15,8 @@ class _InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.male;
 
   int height = 120;
-  int weight = 80;
+  int weight = 60;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,7 @@ class _InputPageState extends State<InputPage> {
                       inactiveTrackColor: Color(0x158D8E98),
                       thumbColor: Color(0xFFEB1555),
                       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 25),
                     ),
                     child: Slider(
                       value: height.toDouble(),
@@ -107,21 +108,13 @@ class _InputPageState extends State<InputPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            FloatingActionButton(
-                              onPressed: () {},
-                              backgroundColor: Color(0xFF4C45E),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () => setState(() => weight--),
                             ),
-                            FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: Color(0xFF4C45E),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                )),
+                            RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () => setState(() => weight++)),
                           ],
                         )
                       ],
@@ -129,7 +122,28 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(color: kActiveCardColor),
+                  child: ReusableCard(
+                    color: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('AGE', style: kLabelTextStyle),
+                        Text(age.toString(), style: kNumberTextStyle),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () => setState(() => age--),
+                            ),
+                            RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () => setState(() => age++)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -142,6 +156,25 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({this.icon, this.onPressed});
+  final IconData icon;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: onPressed,
+      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
+      elevation: 0,
+      disabledElevation: 6.0,
+      shape: CircleBorder(),
+      fillColor: Color(0xFF141425),
     );
   }
 }
